@@ -4,7 +4,7 @@
 
 namespace RedBlue {
 
-CorePkmn::CorePkmn(CoreStats iv, Specie specie, int level, MoveSet moveSet)
+CorePkmn::CorePkmn(CoreStats iv, Specie::Tag specie, int level, MoveSet moveSet)
 : mSpecie(specie)
 , mIV(iv)
 , mEV{0,0,0,0,0}
@@ -19,7 +19,7 @@ CorePkmn::CorePkmn(CoreStats iv, Specie specie, int level, MoveSet moveSet)
   mHP = mStats.hp;
 }
 
-void CorePkmn::Evolve(Specie specie) {
+void CorePkmn::Evolve(Specie::Tag specie) {
   assert(CanSpecieEvolveTo(mSpecie, mLevel, specie));
   mSpecie = specie;
 }
@@ -38,7 +38,6 @@ void CorePkmn::DamageHP(int hp) {
   if (mHP < 0) mHP = 0;
   if (mHP == 0) mNonVolStatus = NonVolStatus::None;
 }
-
 
 void CorePkmn::AddExp(int exp) {
   const int oldExp = mExp;
@@ -152,15 +151,13 @@ void CorePkmn::IncrementPPStage(int idx) {
   ++pp.stage;
 }
 
-//
-
-Specie CorePkmn::GetSpecie() const { return mSpecie; }
+Specie::Tag CorePkmn::GetSpecie() const { return mSpecie; }
 
 int CorePkmn::GetHP() const { return mHP; }
 
 int CorePkmn::GetExp() const { return mExp; }
 
-NonVolStatus CorePkmn::GetNonVolStatus() const { return mNonVolStatus; }
+NonVolStatus::Tag CorePkmn::GetNonVolStatus() const { return mNonVolStatus; }
 
 int CorePkmn::GetMoveCount() const { return mMoveCount; }
 
@@ -202,8 +199,6 @@ bool CorePkmn::IsAlive() const {
   assert(mHP >= 0 && mHP <= mStats.hp);
   return mHP > 0;
 }
-
-//
 
 std::ostream& operator<<(std::ostream& os, const CorePkmn& cp) {
   os << "NAME" << std::endl;

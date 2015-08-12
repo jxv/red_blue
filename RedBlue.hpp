@@ -9,172 +9,177 @@
 ///.
 namespace RedBlue {
 
-///.
-enum class Specie {
-  Bulbasaur,
-  Ivysaur,
-  Venusaur,
-  Charmander,
-  Charmeleon,
-  Charizard,
-  Squirtle,
-  Wartortle,
-  Blastoise,
-  Caterpie,
-  Metapod,
-  Butterfree,
-  Weedle,
-  Kakuna,
-  Beedrill,
-  Pidgey,
-  Pidgeotto,
-  Pidgeot,
-  Rattata,
-  Raticate,
-  Spearow,
-  Fearow,
-  Ekans,
-  Arbok,
-  Pikachu,
-  Raichu,
-  Sandshrew,
-  Sandslash,
-  NidoranFemale,
-  Nidorina,
-  Nidoqueen,
-  NidoranMale,
-  Nidorino,
-  Nidoking,
-  Clefairy,
-  Clefable,
-  Vulpix,
-  Ninetales,
-  Jigglypuff,
-  Wigglytuff,
-  Zubat,
-  Golbat,
-  Oddish,
-  Gloom,
-  Vileplume,
-  Paras,
-  Parasect,
-  Venonat,
-  Venomoth,
-  Diglett,
-  Dugtrio,
-  Meowth,
-  Persian,
-  Psyduck,
-  Golduck,
-  Mankey,
-  Primeape,
-  Growlithe,
-  Arcanine,
-  Poliwag,
-  Poliwhirl,
-  Poliwrath,
-  Abra,
-  Kadabra,
-  Alakazam,
-  Machop,
-  Machoke,
-  Machamp,
-  Bellsprout,
-  Weepinbell,
-  Victreebel,
-  Tentacool,
-  Tentacruel,
-  Geodude,
-  Graveler,
-  Golem,
-  Ponyta,
-  Rapidash,
-  Slowpoke,
-  Slowbrow,
-  Magnemite,
-  Magneton,
-  FarfetchD,
-  Doduo,
-  Dodrio,
-  Seel,
-  Dewgong,
-  Grimer,
-  Muk,
-  Shellder,
-  Cloyster,
-  Gastly,
-  Haunter,
-  Gengar,
-  Onix,
-  Drowzee,
-  Hypno,
-  Krabby,
-  Kingler,
-  Voltorb,
-  Electrode,
-  Exeggcute,
-  Exeggutor,
-  Cubone,
-  Marowak,
-  Hitmonlee,
-  Hitmonchan,
-  Lickitung,
-  Koffing,
-  Weezing,
-  Rhyhorn,
-  Rhydon,
-  Chansey,
-  Tangela,
-  Kangaskhan,
-  Horsea,
-  Seadra,
-  Goldeen,
-  Seaking,
-  Staryu,
-  Starmie,
-  MrMime,
-  Scyther,
-  Jynx,
-  Electabuzz,
-  Magmar,
-  Pinsir,
-  Tauros,
-  Magikarp,
-  Gyarados,
-  Lapras,
-  Ditto,
-  Eevee,
-  Vaporeon,
-  Jolteon,
-  Flareon,
-  Porygon,
-  Omanyte,
-  Omastar,
-  Kabuto,
-  Kabutops,
-  Aerodactyl,
-  Snorlax,
-  Articuno,
-  Zapdos,
-  Moltres,
-  Dratini,
-  Dragonair,
-  Dragonite,
-  Mewtwo,
-  Mew,
+struct Specie {
+  ///.
+  enum Tag {
+    Bulbasaur,
+    Ivysaur,
+    Venusaur,
+    Charmander,
+    Charmeleon,
+    Charizard,
+    Squirtle,
+    Wartortle,
+    Blastoise,
+    Caterpie,
+    Metapod,
+    Butterfree,
+    Weedle,
+    Kakuna,
+    Beedrill,
+    Pidgey,
+    Pidgeotto,
+    Pidgeot,
+    Rattata,
+    Raticate,
+    Spearow,
+    Fearow,
+    Ekans,
+    Arbok,
+    Pikachu,
+    Raichu,
+    Sandshrew,
+    Sandslash,
+    NidoranFemale,
+    Nidorina,
+    Nidoqueen,
+    NidoranMale,
+    Nidorino,
+    Nidoking,
+    Clefairy,
+    Clefable,
+    Vulpix,
+    Ninetales,
+    Jigglypuff,
+    Wigglytuff,
+    Zubat,
+    Golbat,
+    Oddish,
+    Gloom,
+    Vileplume,
+    Paras,
+    Parasect,
+    Venonat,
+    Venomoth,
+    Diglett,
+    Dugtrio,
+    Meowth,
+    Persian,
+    Psyduck,
+    Golduck,
+    Mankey,
+    Primeape,
+    Growlithe,
+    Arcanine,
+    Poliwag,
+    Poliwhirl,
+    Poliwrath,
+    Abra,
+    Kadabra,
+    Alakazam,
+    Machop,
+    Machoke,
+    Machamp,
+    Bellsprout,
+    Weepinbell,
+    Victreebel,
+    Tentacool,
+    Tentacruel,
+    Geodude,
+    Graveler,
+    Golem,
+    Ponyta,
+    Rapidash,
+    Slowpoke,
+    Slowbrow,
+    Magnemite,
+    Magneton,
+    FarfetchD,
+    Doduo,
+    Dodrio,
+    Seel,
+    Dewgong,
+    Grimer,
+    Muk,
+    Shellder,
+    Cloyster,
+    Gastly,
+    Haunter,
+    Gengar,
+    Onix,
+    Drowzee,
+    Hypno,
+    Krabby,
+    Kingler,
+    Voltorb,
+    Electrode,
+    Exeggcute,
+    Exeggutor,
+    Cubone,
+    Marowak,
+    Hitmonlee,
+    Hitmonchan,
+    Lickitung,
+    Koffing,
+    Weezing,
+    Rhyhorn,
+    Rhydon,
+    Chansey,
+    Tangela,
+    Kangaskhan,
+    Horsea,
+    Seadra,
+    Goldeen,
+    Seaking,
+    Staryu,
+    Starmie,
+    MrMime,
+    Scyther,
+    Jynx,
+    Electabuzz,
+    Magmar,
+    Pinsir,
+    Tauros,
+    Magikarp,
+    Gyarados,
+    Lapras,
+    Ditto,
+    Eevee,
+    Vaporeon,
+    Jolteon,
+    Flareon,
+    Porygon,
+    Omanyte,
+    Omastar,
+    Kabuto,
+    Kabutops,
+    Aerodactyl,
+    Snorlax,
+    Articuno,
+    Zapdos,
+    Moltres,
+    Dratini,
+    Dragonair,
+    Dragonite,
+    Mewtwo,
+    Mew,
+  };
+  static const int count = 1 + Mew;
 };
 
-///.
-enum class Move {
-  Absorb,
-  Growl,
-  Tackle,
-  Wrap,
+struct Move {
+  ///.
+  enum Tag {
+    Absorb,
+    Growl,
+    Tackle,
+    Wrap,
+  };
+  static const int count = 1 + Wrap;
 };
 
-std::ostream& operator<<(std::ostream& os, Move move);
+std::ostream& operator<<(std::ostream& os, Move::Tag);
 
-///.
 struct PP {
   int cur;
   int max;
@@ -183,7 +188,6 @@ struct PP {
 
 class CorePkmn;
 
-///.
 class MoveSet {
 public:
   MoveSet();
@@ -201,41 +205,50 @@ private:
   friend class CorePkmn;
 };
 
-///.
-enum class Badge {
-  Boulder,
-  Cascade,
-  Thunder,
-  Rainbow,
-  Soul,
-  Marsh,
-  Fire,
-  Earth,
+struct Badge {
+  ///.
+  enum Tag {
+    Boulder,
+    Cascade,
+    Thunder,
+    Rainbow,
+    Soul,
+    Marsh,
+    Fire,
+    Earth,
+  };
+  static const int count = 1 + Earth;
 };
 
 ///.
-using Badges = FixedSet<Badge, NextUType(Badge::Earth)>;
+using Badges = FixedSet<Badge::Tag, Badge::count>;
 
-///.
-enum class NonVolStatus {
-  Burn,
-  Freeze,
-  Paralysis,
-  Poison,
-  None,
-  Sleep,
-  Toxic,
+struct NonVolStatus {
+  ///.
+  enum Tag {
+    Burn,
+    Freeze,
+    Paralysis,
+    Poison,
+    None,
+    Sleep,
+    Toxic,
+  };
+  static const int count = 1 + Toxic;
 };
 
-std::ostream& operator<<(std::ostream&, NonVolStatus);
+std::ostream& operator<<(std::ostream&, NonVolStatus::Tag);
 
-///.
-enum class VolStatus {
-  Confusion,
-  Flinch,
-  LeechSeed,
-  Nightmare,
-  PartiallyTrapped,
+struct VolStatus {
+  ///.
+  enum Tag {
+    Confusion,
+    Flinch,
+    LeechSeed,
+    Nightmare,
+    PartiallyTrapped,
+  };
+  static const int count = 1 + PartiallyTrapped;
 };
 
 struct VolStatuses {
@@ -254,9 +267,9 @@ struct CoreStats {
   int speed;
 };
 
-CoreStats operator- (const CoreStats &a);
-CoreStats operator+ (const CoreStats &a, const CoreStats &b);
-CoreStats operator- (const CoreStats &a, const CoreStats &b);
+CoreStats operator-(const CoreStats &a);
+CoreStats operator+(const CoreStats &a, const CoreStats &b);
+CoreStats operator-(const CoreStats &a, const CoreStats &b);
 
 struct ActiveStats {
   int attack;
@@ -267,12 +280,11 @@ struct ActiveStats {
   int accuracy;
 };
 
-///.
 class CorePkmn {
 public:
-  CorePkmn(CoreStats iv, Specie, int level, MoveSet);
+  CorePkmn(CoreStats iv, Specie::Tag, int level, MoveSet);
   //
-  void Evolve(Specie);
+  void Evolve(Specie::Tag);
   void RestoreHP();
   void RestoreHP(int hp);
   void DamageHP(int hp);
@@ -293,10 +305,10 @@ public:
   void RestorePP(int idx, int val);
   void IncrementPPStage(int idx);
   //
-  Specie GetSpecie() const;
+  Specie::Tag GetSpecie() const;
   int GetHP() const;
   int GetExp() const;
-  NonVolStatus GetNonVolStatus() const;
+  NonVolStatus::Tag GetNonVolStatus() const;
   int GetMoveCount() const;
   Move GetMove(int idx) const;
   const PP& GetPP(int idx) const;
@@ -304,12 +316,12 @@ public:
   CoreStats GetStats() const;
   bool IsAlive() const;
 private:
-  Specie mSpecie;
+  Specie::Tag mSpecie;
   int mHP;
   int mExp;
   CoreStats mIV;
   CoreStats mEV;
-  NonVolStatus mNonVolStatus;
+  NonVolStatus::Tag mNonVolStatus;
   int mMoveCount;
   std::array<Move, 4> mMoves;
   std::array<PP, 4> mPPs;
@@ -327,53 +339,57 @@ std::ostream& operator<<(std::ostream&, const CorePkmn&);
 struct ActivePkmn {
 public:
   const ActiveStats& GetStats() const;
-
+  //
 private:
   CorePkmn& mCorePkmn;
-  opt::optional<Specie> mTransform;
+  opt::optional<Specie::Tag> mTransform;
   VolStatuses mVolStatuses;
   ActiveStats mStats;
   ActiveStats mStages;
+  //
+  void CalcAttack();
+  void CalcDefense();
+  void CalcSpecial();
+  void CalcSpeed();
+  void CalcAccuracy();
+  void CalcEvasion();
 };
 
-///.
-enum class Player {
-  A,
-  B,
+struct Player {
+  ///.
+  enum Tag {
+    A,
+    B,
+  };
+  static const int count = 1 + B;
 };
   
-using ActiveTable = Table<Player, ActivePkmn, NextUType(Player::B)>;
-using CoresTable = Table<Player, std::array<CorePkmn, 6>, NextUType(Player::B)>;
+using ActiveTable = Table<Player, ActivePkmn, Player::count>;
+using CoresTable = Table<Player, std::array<CorePkmn, 6>, Player::count>;
 
 class Battle {
 public:
   Battle();
-
+  //
   ActivePkmn& GetHotActivePkmn();
   ActivePkmn& GetColdActivePkmn();
   CorePkmn& GetHotCorePkmn();
   CorePkmn& GetColdCorePkmn();
-
+  //
 private:
-  Player mHot;
-  Player mCold;
+  Player::Tag mHot;
+  Player::Tag mCold;
 };
 
-CoreStats GetSpecieBaseStats(Specie s) noexcept;
+CoreStats GetSpecieBaseStats(Specie::Tag) noexcept;
 CoreStats MakeIV(int atk, int def, int spc, int spd);
 
-int GetSpecieID(Specie s);
-const std::string GetSpecieName(Specie);
-bool CanSpecieEvolveTo(Specie, int level, Specie);
-
-int CalcSpecieExp(Specie p, int level);
-int CalcExpFast(int level);
-int CalcExpMediumFast(int level);
-int CalcExpMediumSlow(int level);
-int CalcExpSlow(int level);
-
-int GetMoveMaxPP(Move);
-int CalcMoveMaxPP(Move, int stage);
+int GetSpecieID(Specie::Tag);
+const std::string GetSpecieName(Specie::Tag);
+bool CanSpecieEvolveTo(Specie::Tag, int level, Specie::Tag);
+int CalcSpecieExp(Specie::Tag, int level);
+int GetMoveMaxPP(Move::Tag);
+int CalcMoveMaxPP(Move::Tag, int stage);
 
 }
 

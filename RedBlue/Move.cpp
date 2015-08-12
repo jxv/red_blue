@@ -2,7 +2,7 @@
 
 namespace RedBlue {
 
-std::ostream& operator<<(std::ostream& os, Move move) {
+std::ostream& operator<<(std::ostream& os, Move::Tag move) {
   switch (move) {
   case Move::Absorb: os << "ABSORB"; break;
   case Move::Growl: os << "GROWL"; break;
@@ -11,11 +11,11 @@ std::ostream& operator<<(std::ostream& os, Move move) {
   }
 }
 
-int GetMoveMaxPP(Move) {
+int GetMoveMaxPP(Move::Tag) {
   return 10;
 }
 
-int CalcMoveMaxPP(Move, int stage) {
+int CalcMoveMaxPP(Move::Tag, int stage) {
   return 10;
 }
 

@@ -35,7 +35,7 @@ class Table {
 public:
   Table() {}
   B& operator[](A a) { return mArray[ToUType(a)]; }
-  size_t Size() const { return mArray.size(); }
+  size_t Size() const { return size; }
 private:
   std::array<B, size> mArray;
 };

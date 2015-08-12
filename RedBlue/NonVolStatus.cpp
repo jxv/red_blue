@@ -2,7 +2,7 @@
 
 namespace RedBlue {
 
-std::ostream& operator<<(std::ostream& os, NonVolStatus nvs) {
+std::ostream& operator<<(std::ostream& os, NonVolStatus::Tag nvs) {
   switch (nvs) {
   case NonVolStatus::Burn: os << "Burn"; break;
   case NonVolStatus::Freeze: os << "Freeze"; break;

@@ -4,7 +4,7 @@
 
 namespace RedBlue {
 
-static int stage_multiplier(int stage) {
+static int StageMultiplier(int stage) {
   switch (stage) {
   case -6: return 25;
   case -5: return 28;
@@ -23,125 +23,28 @@ static int stage_multiplier(int stage) {
   }
 }
 
-/*
-Active::Active(Base &base)
-: _base(base)
-, _volatile_statuses{0, 0, 0, 0}
-, _stages{0, 0, 0, 0, 0, 0}
-{
-  compute_stats();
+void ActivePkmn::CalcAttack() {
+  mStats.attack = StageMultiplier(mStages.attack) * mCorePkmn.GetStats().attack / 100;
 }
 
-Pokemon Active::pokemon() const {
-  return _transform ? *_transform : _base.pokemon();
+void ActivePkmn::CalcDefense() {
+  mStats.defense = StageMultiplier(mStages.defense) * mCorePkmn.GetStats().defense / 100;
 }
 
-const Base &Active::base() const {
-  return _base;
+void ActivePkmn::CalcSpecial() {
+  mStats.special = StageMultiplier(mStages.special) * mCorePkmn.GetStats().special / 100;
 }
 
-const VolatileStatuses &Active::volatile_statuses() const {
-  return _volatile_statuses;
+void ActivePkmn::CalcSpeed() {
+  mStats.speed = StageMultiplier(mStages.speed) * mCorePkmn.GetStats().speed / 100;
 }
 
-const ActiveStats &Active::stages() const {
-  return _stages;
+void ActivePkmn::CalcAccuracy() {
+  mStats.accuracy = StageMultiplier(mStages.accuracy);
 }
 
-const ActiveStats &Active::stats() const {
-  return _stats;
+void ActivePkmn::CalcEvasion() {
+  mStats.evasion = StageMultiplier(mStages.evasion);
 }
-
-bool Active::is_transform() const {
-  return !!_transform;
-}
-
-void Active::set_transform(Pokemon pokemon) {
-  *_transform = pokemon;
-}
-
-void Active::add_volatile_status(VolatileStatus vs, int seed) {
-  switch (vs) {
-  case VolatileStatus::Confusion: break;
-  case VolatileStatus::Flinch: break;
-  case VolatileStatus::Nightmare: break;
-  case VolatileStatus::PartiallyTrapped: break;
-  }
-}
-
-static bool in_stage_range(int stage) {
-  return stage >= 6 && stage <= -6;
-}
-
-void Active::set_attack_stage(int stage) {
-  assert(in_stage_range(stage));
-  _stages.attack = stage; 
-  compute_attack();
-}
-
-void Active::set_defense_stage(int stage) {
-  assert(in_stage_range(stage));
-  _stages.defense = stage;
-  compute_defense();
-}
-
-void Active::set_special_stage(int stage) {
-  assert(in_stage_range(stage));
-  _stages.special = stage;
-  compute_special();
-}
-
-void Active::set_speed_stage(int stage) {
-  assert(in_stage_range(stage));
-  _stages.speed = stage;
-  compute_speed();
-}
-
-void Active::set_accuracy_stage(int stage) {
-  assert(in_stage_range(stage));
-  _stages.accuracy = stage; 
-  compute_accuracy();
-}
-
-void Active::set_evasion_stage(int stage) {
-  assert(in_stage_range(stage));
-  _stages.evasion = stage;
-  compute_evasion();
-}
-
-void Active::compute_stats() {
-  compute_attack();
-  compute_defense();
-  compute_special();
-  compute_speed();
-  compute_accuracy();
-  compute_evasion();
-}
-
-void Active::compute_attack() {
-  _stats.attack = stage_multiplier(_stages.attack) * _base.stats().attack / 100;
-}
-
-void Active::compute_defense() {
-  _stats.defense = stage_multiplier(_stages.defense) * _base.stats().defense / 100;
-}
-
-void Active::compute_special() {
-  _stats.special = stage_multiplier(_stages.special) * _base.stats().special / 100;
-}
-
-void Active::compute_speed() {
-  _stats.speed = stage_multiplier(_stages.speed) * _base.stats().speed / 100;
-}
-
-void Active::compute_accuracy() {
-  _stats.accuracy = stage_multiplier(_stages.accuracy);
-}
-
-void Active::compute_evasion() {
-  _stats.evasion = stage_multiplier(_stages.evasion);
-}
-
-*/
 
 }

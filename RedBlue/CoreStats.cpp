@@ -16,8 +16,7 @@ CoreStats operator+ (const CoreStats &a, const CoreStats &b) {
 
 CoreStats operator- (const CoreStats &a, const CoreStats &b) { return a + (-b); }
 
-CoreStats GetSpecieBaseStats(Specie s) noexcept
-{
+CoreStats GetSpecieBaseStats(Specie::Tag s) noexcept {
   switch (s) {
   case Specie::Bulbasaur: return { 45, 49, 49, 65, 45 };
   case Specie::Ivysaur: return { 60, 62, 63, 80, 60 };
@@ -40,8 +39,7 @@ CoreStats GetSpecieBaseStats(Specie s) noexcept
   };
 }
 
-CoreStats MakeIV(int atk, int def, int spc, int spd)
-{
+CoreStats MakeIV(int atk, int def, int spc, int spd) {
   assert((atk & 0xf) == atk);
   assert((def & 0xf) == def);
   assert((spc & 0xf) == spc);
