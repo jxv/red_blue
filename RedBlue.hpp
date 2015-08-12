@@ -6,176 +6,173 @@
 #include <tuple>
 #include "Util.hpp"
 
-///.
 namespace RedBlue {
 
 struct Specie {
-  ///.
   enum Tag {
-    Bulbasaur,
-    Ivysaur,
-    Venusaur,
-    Charmander,
-    Charmeleon,
-    Charizard,
-    Squirtle,
-    Wartortle,
-    Blastoise,
-    Caterpie,
-    Metapod,
-    Butterfree,
-    Weedle,
-    Kakuna,
-    Beedrill,
-    Pidgey,
-    Pidgeotto,
-    Pidgeot,
-    Rattata,
-    Raticate,
-    Spearow,
-    Fearow,
-    Ekans,
-    Arbok,
-    Pikachu,
-    Raichu,
-    Sandshrew,
-    Sandslash,
-    NidoranFemale,
-    Nidorina,
-    Nidoqueen,
-    NidoranMale,
-    Nidorino,
-    Nidoking,
-    Clefairy,
-    Clefable,
-    Vulpix,
-    Ninetales,
-    Jigglypuff,
-    Wigglytuff,
-    Zubat,
-    Golbat,
-    Oddish,
-    Gloom,
-    Vileplume,
-    Paras,
-    Parasect,
-    Venonat,
-    Venomoth,
-    Diglett,
-    Dugtrio,
-    Meowth,
-    Persian,
-    Psyduck,
-    Golduck,
-    Mankey,
-    Primeape,
-    Growlithe,
-    Arcanine,
-    Poliwag,
-    Poliwhirl,
-    Poliwrath,
-    Abra,
-    Kadabra,
-    Alakazam,
-    Machop,
-    Machoke,
-    Machamp,
-    Bellsprout,
-    Weepinbell,
-    Victreebel,
-    Tentacool,
-    Tentacruel,
-    Geodude,
-    Graveler,
-    Golem,
-    Ponyta,
-    Rapidash,
-    Slowpoke,
-    Slowbrow,
-    Magnemite,
-    Magneton,
-    FarfetchD,
-    Doduo,
-    Dodrio,
-    Seel,
-    Dewgong,
-    Grimer,
-    Muk,
-    Shellder,
-    Cloyster,
-    Gastly,
-    Haunter,
-    Gengar,
-    Onix,
-    Drowzee,
-    Hypno,
-    Krabby,
-    Kingler,
-    Voltorb,
-    Electrode,
-    Exeggcute,
-    Exeggutor,
-    Cubone,
-    Marowak,
-    Hitmonlee,
-    Hitmonchan,
-    Lickitung,
-    Koffing,
-    Weezing,
-    Rhyhorn,
-    Rhydon,
-    Chansey,
-    Tangela,
-    Kangaskhan,
-    Horsea,
-    Seadra,
-    Goldeen,
-    Seaking,
-    Staryu,
-    Starmie,
-    MrMime,
-    Scyther,
-    Jynx,
-    Electabuzz,
-    Magmar,
-    Pinsir,
-    Tauros,
-    Magikarp,
-    Gyarados,
-    Lapras,
-    Ditto,
-    Eevee,
-    Vaporeon,
-    Jolteon,
-    Flareon,
-    Porygon,
-    Omanyte,
-    Omastar,
-    Kabuto,
-    Kabutops,
-    Aerodactyl,
-    Snorlax,
-    Articuno,
-    Zapdos,
-    Moltres,
-    Dratini,
-    Dragonair,
-    Dragonite,
-    Mewtwo,
-    Mew,
+    bulbasaur,
+    ivysaur,
+    venusaur,
+    charmander,
+    charmeleon,
+    charizard,
+    squirtle,
+    wartortle,
+    blastoise,
+    caterpie,
+    metapod,
+    butterfree,
+    weedle,
+    kakuna,
+    beedrill,
+    pidgey,
+    pidgeotto,
+    pidgeot,
+    rattata,
+    raticate,
+    spearow,
+    fearow,
+    ekans,
+    arbok,
+    pikachu,
+    raichu,
+    sandshrew,
+    sandslash,
+    nidoran_female,
+    nidorina,
+    nidoqueen,
+    nidoran_male,
+    nidorino,
+    nidoking,
+    clefairy,
+    clefable,
+    vulpix,
+    ninetales,
+    jigglypuff,
+    wigglytuff,
+    zubat,
+    golbat,
+    oddish,
+    gloom,
+    vileplume,
+    paras,
+    parasect,
+    venonat,
+    venomoth,
+    diglett,
+    dugtrio,
+    meowth,
+    persian,
+    psyduck,
+    golduck,
+    mankey,
+    primeape,
+    growlithe,
+    arcanine,
+    poliwag,
+    poliwhirl,
+    poliwrath,
+    abra,
+    kadabra,
+    alakazam,
+    machop,
+    machoke,
+    machamp,
+    bellsprout,
+    weepinbell,
+    victreebel,
+    tentacool,
+    tentacruel,
+    geodude,
+    graveler,
+    golem,
+    ponyta,
+    rapidash,
+    slowpoke,
+    slowbrow,
+    magnemite,
+    magneton,
+    farfetch_d,
+    doduo,
+    dodrio,
+    seel,
+    dewgong,
+    grimer,
+    muk,
+    shellder,
+    cloyster,
+    gastly,
+    haunter,
+    gengar,
+    onix,
+    drowzee,
+    hypno,
+    krabby,
+    kingler,
+    voltorb,
+    electrode,
+    exeggcute,
+    exeggutor,
+    cubone,
+    marowak,
+    hitmonlee,
+    hitmonchan,
+    lickitung,
+    koffing,
+    weezing,
+    rhyhorn,
+    rhydon,
+    chansey,
+    tangela,
+    kangaskhan,
+    horsea,
+    seadra,
+    goldeen,
+    seaking,
+    staryu,
+    starmie,
+    mr_Mime,
+    scyther,
+    jynx,
+    electabuzz,
+    magmar,
+    pinsir,
+    tauros,
+    magikarp,
+    gyarados,
+    lapras,
+    ditto,
+    eevee,
+    vaporeon,
+    jolteon,
+    flareon,
+    porygon,
+    omanyte,
+    omastar,
+    kabuto,
+    kabutops,
+    aerodactyl,
+    snorlax,
+    articuno,
+    zapdos,
+    moltres,
+    dratini,
+    dragonair,
+    dragonite,
+    mewtwo,
+    mew,
   };
-  static const int count = 1 + Mew;
+  static const int count = 1 + mew;
 };
 
 struct Move {
-  ///.
   enum Tag {
-    Absorb,
-    Growl,
-    Tackle,
-    Wrap,
+    absorb,
+    growl,
+    tackle,
+    wrap,
   };
-  static const int count = 1 + Wrap;
+  static const int count = 1 + wrap;
 };
 
 std::ostream& operator<<(std::ostream& os, Move::Tag);
@@ -191,72 +188,68 @@ class CorePkmn;
 class MoveSet {
 public:
   MoveSet();
-  MoveSet(Move, int stage0 = 0);
-  MoveSet(Move, Move, int stage0 = 0, int stage1 = 0);
-  MoveSet(Move, Move, Move, int stage0 = 0, int stage1 = 0, int stage2 = 0);
-  MoveSet(Move, Move, Move, Move, int stage0 = 0, int stage1 = 0, int stage2 = 0, int stage3 = 0);
+  MoveSet(Move::Tag, int stage0 = 0);
+  MoveSet(Move::Tag, Move::Tag, int stage0 = 0, int stage1 = 0);
+  MoveSet(Move::Tag, Move::Tag, Move::Tag, int stage0 = 0, int stage1 = 0, int stage2 = 0);
+  MoveSet(Move::Tag, Move::Tag, Move::Tag, Move::Tag, int stage0 = 0, int stage1 = 0, int stage2 = 0, int stage3 = 0);
 private: 
-  std::array<Move, 4> mMoves;
-  std::array<PP, 4> mPPs;
-  int mMoveCount;
+  std::array<Move::Tag, 4> moves;
+  std::array<PP, 4> pps;
+  int move_count;
   //
-  void InitPPs();
+  void init_pps();
   //
   friend class CorePkmn;
 };
 
 struct Badge {
-  ///.
   enum Tag {
-    Boulder,
-    Cascade,
-    Thunder,
-    Rainbow,
-    Soul,
-    Marsh,
-    Fire,
-    Earth,
+    boulder,
+    cascade,
+    thunder,
+    rainbow,
+    soul,
+    marsh,
+    fire,
+    earth,
   };
-  static const int count = 1 + Earth;
+  static const int count = 1 + earth;
 };
 
-///.
 using Badges = FixedSet<Badge::Tag, Badge::count>;
 
 struct NonVolStatus {
-  ///.
   enum Tag {
-    Burn,
-    Freeze,
-    Paralysis,
-    Poison,
-    None,
-    Sleep,
-    Toxic,
+    burn,
+    freeze,
+    paralysis,
+    poison,
+    none,
+    sleep,
+    toxic,
   };
-  static const int count = 1 + Toxic;
+  static const int count = 1 + toxic;
 };
 
 std::ostream& operator<<(std::ostream&, NonVolStatus::Tag);
 
 struct VolStatus {
-  ///.
   enum Tag {
-    Confusion,
-    Flinch,
-    LeechSeed,
-    Nightmare,
-    PartiallyTrapped,
+    confusion,
+    flinch,
+    leech_seed,
+    nightmare,
+    partially_trapped,
   };
-  static const int count = 1 + PartiallyTrapped;
+  static const int count = 1 + partially_trapped;
 };
 
 struct VolStatuses {
   int confusion;
   int flinch;
-  int leechSeed;
+  int leech_seed;
   int nightmare;
-  int partiallyTrapped;
+  int partially_trapped;
 };
 
 struct CoreStats {
@@ -284,52 +277,52 @@ class CorePkmn {
 public:
   CorePkmn(CoreStats iv, Specie::Tag, int level, MoveSet);
   //
-  void Evolve(Specie::Tag);
-  void RestoreHP();
-  void RestoreHP(int hp);
-  void DamageHP(int hp);
-  void AddExp(int exp);
-  void AddEV(CoreStats);
-  void Burn();
-  void Freeze();
-  void Paralyze();
-  void Poison();
-  void Sleep();
-  void Intoxicate();
-  void RestoreNonVolStatus();
-  void SwapMove(int idx0, int idx1);
-  void LearnMove(Move, int idx);
-  void UsePP(int idx);
-  void RestorePP();
-  void RestorePP(int idx);
-  void RestorePP(int idx, int val);
-  void IncrementPPStage(int idx);
+  void evolve(Specie::Tag);
+  void restore_hp();
+  void restore_hp(int hp);
+  void damage_hp(int hp);
+  void add_exp(int exp);
+  void add_ev(CoreStats);
+  void burn();
+  void freeze();
+  void paralyze();
+  void poison();
+  void sleep();
+  void intoxicate();
+  void restore_nonvolstatus();
+  void swap_move(int idx0, int idx1);
+  void learn_move(Move::Tag, int idx);
+  void use_pp(int idx);
+  void restore_pp();
+  void restore_pp(int idx);
+  void restore_pp(int idx, int val);
+  void increment_pp_stage(int idx);
   //
-  Specie::Tag GetSpecie() const;
-  int GetHP() const;
-  int GetExp() const;
-  NonVolStatus::Tag GetNonVolStatus() const;
-  int GetMoveCount() const;
-  Move GetMove(int idx) const;
-  const PP& GetPP(int idx) const;
-  int GetLevel() const;
-  CoreStats GetStats() const;
-  bool IsAlive() const;
+  Specie::Tag get_specie() const;
+  int get_hp() const;
+  int get_exp() const;
+  NonVolStatus::Tag get_nonvolstatus() const;
+  int get_move_count() const;
+  Move::Tag get_move(int idx) const;
+  const PP& get_pp(int idx) const;
+  int get_level() const;
+  CoreStats get_stats() const;
+  bool is_alive() const;
 private:
-  Specie::Tag mSpecie;
-  int mHP;
-  int mExp;
-  CoreStats mIV;
-  CoreStats mEV;
-  NonVolStatus::Tag mNonVolStatus;
-  int mMoveCount;
-  std::array<Move, 4> mMoves;
-  std::array<PP, 4> mPPs;
-  int mLevel;
-  CoreStats mStats;
+  Specie::Tag specie;
+  int hp;
+  int exp;
+  CoreStats iv;
+  CoreStats ev;
+  NonVolStatus::Tag nonvolstatus;
+  int move_count;
+  std::array<Move::Tag, 4> moves;
+  std::array<PP, 4> pps;
+  int level;
+  CoreStats stats;
   //
-  void UpdateLevel();
-  void UpdateStats();
+  void update_level();
+  void update_stats();
   //
   friend std::ostream& operator<<(std::ostream&, const CorePkmn&);
 };
@@ -338,30 +331,29 @@ std::ostream& operator<<(std::ostream&, const CorePkmn&);
 
 struct ActivePkmn {
 public:
-  const ActiveStats& GetStats() const;
+  const ActiveStats& get_stats() const;
   //
 private:
-  CorePkmn& mCorePkmn;
-  opt::optional<Specie::Tag> mTransform;
-  VolStatuses mVolStatuses;
-  ActiveStats mStats;
-  ActiveStats mStages;
+  CorePkmn& corepkmn;
+  opt::optional<Specie::Tag> transform;
+  VolStatuses volstatuses;
+  ActiveStats stats;
+  ActiveStats stages;
   //
-  void CalcAttack();
-  void CalcDefense();
-  void CalcSpecial();
-  void CalcSpeed();
-  void CalcAccuracy();
-  void CalcEvasion();
+  void update_attack();
+  void update_defense();
+  void update_special();
+  void update_speed();
+  void update_accuracy();
+  void update_evasion();
 };
 
 struct Player {
-  ///.
   enum Tag {
-    A,
-    B,
+    a,
+    b,
   };
-  static const int count = 1 + B;
+  static const int count = 1 + b;
 };
   
 using ActiveTable = Table<Player, ActivePkmn, Player::count>;
@@ -371,25 +363,25 @@ class Battle {
 public:
   Battle();
   //
-  ActivePkmn& GetHotActivePkmn();
-  ActivePkmn& GetColdActivePkmn();
-  CorePkmn& GetHotCorePkmn();
-  CorePkmn& GetColdCorePkmn();
+  ActivePkmn& get_hot_activepkmn();
+  ActivePkmn& get_cold_activepkmn();
+  CorePkmn& get_hot_corepkmn();
+  CorePkmn& get_cold_corepkmn();
   //
 private:
-  Player::Tag mHot;
-  Player::Tag mCold;
+  Player::Tag hot;
+  Player::Tag cold;
 };
 
-CoreStats GetSpecieBaseStats(Specie::Tag) noexcept;
-CoreStats MakeIV(int atk, int def, int spc, int spd);
+CoreStats get_specie_base_stats(Specie::Tag) noexcept;
+CoreStats make_iv(int atk, int def, int spc, int spd);
 
-int GetSpecieID(Specie::Tag);
-const std::string GetSpecieName(Specie::Tag);
-bool CanSpecieEvolveTo(Specie::Tag, int level, Specie::Tag);
-int CalcSpecieExp(Specie::Tag, int level);
-int GetMoveMaxPP(Move::Tag);
-int CalcMoveMaxPP(Move::Tag, int stage);
+int get_specie_id(Specie::Tag);
+const std::string get_specie_name(Specie::Tag);
+bool can_specie_evolve_to(Specie::Tag, int level, Specie::Tag);
+int calc_specie_exp(Specie::Tag, int level);
+int get_move_max_pp(Move::Tag);
+int calc_move_max_pp(Move::Tag, int stage);
 
 }
 

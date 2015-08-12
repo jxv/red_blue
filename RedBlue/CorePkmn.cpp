@@ -4,52 +4,53 @@
 
 namespace RedBlue {
 
-CorePkmn::CorePkmn(CoreStats iv, Specie::Tag specie, int level, MoveSet moveSet)
-: mSpecie(specie)
-, mIV(iv)
-, mEV{0,0,0,0,0}
-, mLevel(level)
-, mExp(CalcSpecieExp(specie, level))
-, mMoves(moveSet.mMoves)
-, mMoveCount(moveSet.mMoveCount)
-, mPPs(moveSet.mPPs)
-, mNonVolStatus(NonVolStatus::None)
-{
-  UpdateStats();
-  mHP = mStats.hp;
+CorePkmn::CorePkmn(CoreStats iv_, Specie::Tag specie_, int level_, MoveSet moveset_)
+: specie(specie_)
+, iv(iv_)
+, ev{0,0,0,0,0}
+, level(level_)
+, exp(calc_specie_exp(specie_, level_))
+, moves(moveset_.moves)
+, move_count(moveset_.move_count)
+, pps(moveset_.pps)
+, nonvolstatus(NonVolStatus::none) {
+  update_stats();
+  hp = stats.hp;
 }
 
-void CorePkmn::Evolve(Specie::Tag specie) {
-  assert(CanSpecieEvolveTo(mSpecie, mLevel, specie));
-  mSpecie = specie;
+void CorePkmn::evolve(Specie::Tag to_specie) {
+  assert(can_specie_evolve_to(specie, level, to_specie));
+  specie = to_specie;
 }
 
-void CorePkmn::RestoreHP() { mHP = mStats.hp; }
+void CorePkmn::restore_hp() { hp = stats.hp; }
 
-void CorePkmn::RestoreHP(int hp) {
-  assert(mHP < mStats.hp);
-  mHP += hp;
-  if (mHP > mStats.hp) mHP = mStats.hp;
+void CorePkmn::restore_hp(int hp_) {
+  assert(hp_ > 0);
+  assert(hp < stats.hp);
+  hp += hp_;
+  if (hp > stats.hp) hp = stats.hp;
 }
 
-void CorePkmn::DamageHP(int hp) {
-  assert(mHP > 0);
-  mHP -= hp;
-  if (mHP < 0) mHP = 0;
-  if (mHP == 0) mNonVolStatus = NonVolStatus::None;
+void CorePkmn::damage_hp(int hp_) {
+  assert(hp_ > 0);
+  assert(hp > 0);
+  hp -= hp_;
+  if (hp < 0) hp = 0;
+  if (hp == 0) nonvolstatus = NonVolStatus::none;
 }
 
-void CorePkmn::AddExp(int exp) {
-  const int oldExp = mExp;
-  const int maxExp = CalcSpecieExp(mSpecie, 100);
-  assert(exp <= maxExp);
-  if (mExp == maxExp) return;
-  mExp += exp;
-  if (mExp > maxExp) mExp = maxExp;
-  UpdateLevel();
+void CorePkmn::add_exp(int exp_) {
+  const int old_exp = exp;
+  const int max_exp = calc_specie_exp(specie, 100);
+  assert(exp <= max_exp);
+  if (exp == max_exp) return;
+  exp += exp_;
+  if (exp > max_exp) exp = max_exp;
+  update_level();
 }
 
-bool validateEV(const CoreStats &e) {
+bool validate_ev(const CoreStats &e) {
   return
     (e.hp & 0xffff) == e.hp &&
     (e.attack & 0xffff) == e.attack &&
@@ -58,162 +59,161 @@ bool validateEV(const CoreStats &e) {
     (e.special & 0xffff) == e.special;
 }
 
-void CorePkmn::AddEV(CoreStats ev) {
-  assert(validateEV(mEV));
-  assert(validateEV(ev));
-  const auto  oldEV = mEV;
-  // ev = mEV + ev;
+void CorePkmn::add_ev(CoreStats ev_) {
+  assert(validate_ev(ev_));
+  assert(validate_ev(ev));
+  const auto  old_ev = ev;
+  // ev = ev + ev;
   // TODO
 }
 
-void CorePkmn::Burn() {
-  assert(IsAlive());
-  assert(mNonVolStatus == NonVolStatus::None);
-  mNonVolStatus = NonVolStatus::Burn;
+void CorePkmn::burn() {
+  assert(is_alive());
+  assert(nonvolstatus == NonVolStatus::none);
+  nonvolstatus = NonVolStatus::burn;
 }
 
-void CorePkmn::Freeze() {
-  assert(IsAlive());
-  assert(mNonVolStatus == NonVolStatus::None);
-  mNonVolStatus = NonVolStatus::Freeze;
+void CorePkmn::freeze() {
+  assert(is_alive());
+  assert(nonvolstatus == NonVolStatus::none);
+  nonvolstatus = NonVolStatus::freeze;
 }
 
-void CorePkmn::Paralyze() {
-  assert(IsAlive());
-  assert(mNonVolStatus == NonVolStatus::None);
-  mNonVolStatus = NonVolStatus::Paralysis;
+void CorePkmn::paralyze() {
+  assert(is_alive());
+  assert(nonvolstatus == NonVolStatus::none);
+  nonvolstatus = NonVolStatus::paralysis;
 }
 
-void CorePkmn::Poison() {
-  assert(IsAlive());
-  assert(mNonVolStatus == NonVolStatus::None || mNonVolStatus == NonVolStatus::Toxic);
-  mNonVolStatus = NonVolStatus::Poison;
+void CorePkmn::poison() {
+  assert(is_alive());
+  assert(nonvolstatus == NonVolStatus::none || nonvolstatus == NonVolStatus::toxic);
+  nonvolstatus = NonVolStatus::poison;
 }
 
-void CorePkmn::Sleep() {
-  assert(IsAlive());
-  assert(mNonVolStatus == NonVolStatus::None);
-  mNonVolStatus = NonVolStatus::Sleep;
+void CorePkmn::sleep() {
+  assert(is_alive());
+  assert(nonvolstatus == NonVolStatus::none);
+  nonvolstatus = NonVolStatus::sleep;
 }
 
-void CorePkmn::Intoxicate() {
-  assert(IsAlive());
-  assert(mNonVolStatus == NonVolStatus::None);
-  mNonVolStatus = NonVolStatus::Toxic;
+void CorePkmn::intoxicate() {
+  assert(is_alive());
+  assert(nonvolstatus == NonVolStatus::none);
+  nonvolstatus = NonVolStatus::toxic;
 }
 
-void CorePkmn::RestoreNonVolStatus() { mNonVolStatus = NonVolStatus::None; }
+void CorePkmn::restore_nonvolstatus() { nonvolstatus = NonVolStatus::none; }
 
-void CorePkmn::SwapMove(int idx0, int idx1) {
-  assert(idx0 >= 0 && idx0 < mMoveCount);
-  assert(idx1 >= 0 && idx1 < mMoveCount);
-  std::swap(mMoves[idx0], mMoves[idx1]);
+void CorePkmn::swap_move(int idx0, int idx1) {
+  assert(idx0 >= 0 && idx0 < move_count);
+  assert(idx1 >= 0 && idx1 < move_count);
+  std::swap(moves[idx0], moves[idx1]);
 }
 
-void CorePkmn::LearnMove(Move move, int idx) {
-  assert(idx >= 0 && idx < mMoveCount);
-  assert(/* CanLearnMove(mSpecie, move) */ true);
-  assert(/* !HasMove(move) */ true);
-  mMoves[idx] = move;
+void CorePkmn::learn_move(Move::Tag m, int idx) {
+  assert(idx >= 0 && idx < move_count);
+  assert(/* can_learn_move(specie, m) */ true);
+  assert(/* !has_move(m) */ true);
+  moves[idx] = m;
   /// TODO: Reset PP 
-  mPPs[idx] = (PP) { .cur = 15, .max = 15, .stage = 0 };
+  pps[idx] = { .cur = 15, .max = 15, .stage = 0 };
 }
 
-void CorePkmn::UsePP(int idx) {
-  assert(idx >= 0 && idx < mMoveCount);
-  assert(mPPs[idx].cur > 0);
-  --mPPs[idx].cur;
+void CorePkmn::use_pp(int idx) {
+  assert(idx >= 0 && idx < move_count);
+  assert(pps[idx].cur > 0);
+  --pps[idx].cur;
 }
 
-void CorePkmn::RestorePP() {
-  for (auto& pp : mPPs) {
+void CorePkmn::restore_pp() {
+  for (auto& pp : pps) {
     pp.cur = pp.max;
   }
 }
 
-void CorePkmn::RestorePP(int idx) {
-  assert(idx >= 0 && idx < mMoveCount);
-  auto& pp = mPPs[idx];
+void CorePkmn::restore_pp(int idx) {
+  assert(idx >= 0 && idx < move_count);
+  auto& pp = pps[idx];
   pp.cur = pp.max;
 }
 
-void CorePkmn::RestorePP(int idx, int val) {
-  assert(idx >= 0 && idx < mMoveCount);
-  auto& pp = mPPs[idx];
-  pp.cur += val;
+void CorePkmn::restore_pp(int idx, int addition) {
+  assert(idx >= 0 && idx < move_count);
+  auto& pp = pps[idx];
+  pp.cur += addition;
   pp.cur %= pp.max + 1;
 }
 
-void CorePkmn::IncrementPPStage(int idx) {
-  assert(idx >= 0 && idx < mMoveCount);
-  auto& pp = mPPs[idx];
+void CorePkmn::increment_pp_stage(int idx) {
+  assert(idx >= 0 && idx < move_count);
+  auto& pp = pps[idx];
   assert(pp.stage >= 0 && pp.stage < 6);
   ++pp.stage;
 }
 
-Specie::Tag CorePkmn::GetSpecie() const { return mSpecie; }
+Specie::Tag CorePkmn::get_specie() const { return specie; }
 
-int CorePkmn::GetHP() const { return mHP; }
+int CorePkmn::get_hp() const { return hp; }
 
-int CorePkmn::GetExp() const { return mExp; }
+int CorePkmn::get_exp() const { return exp; }
 
-NonVolStatus::Tag CorePkmn::GetNonVolStatus() const { return mNonVolStatus; }
+NonVolStatus::Tag CorePkmn::get_nonvolstatus() const { return nonvolstatus; }
 
-int CorePkmn::GetMoveCount() const { return mMoveCount; }
+int CorePkmn::get_move_count() const { return move_count; }
 
-Move CorePkmn::GetMove(int idx) const {
-
-  assert(idx >= 0 && idx < mMoveCount);
-  return mMoves[idx];
+Move::Tag CorePkmn::get_move(int idx) const {
+  assert(idx >= 0 && idx < move_count);
+  return moves[idx];
 }
 
-const PP& CorePkmn::GetPP(int idx) const {
+const PP& CorePkmn::get_pp(int idx) const {
 
-  assert(idx >= 0 && idx < mMoveCount);
-  return mPPs[idx];
+  assert(idx >= 0 && idx < move_count);
+  return pps[idx];
 }
 
-int CorePkmn::GetLevel() const { return mLevel; }
+int CorePkmn::get_level() const { return level; }
 
-CoreStats CorePkmn::GetStats() const { return mStats; }
+CoreStats CorePkmn::get_stats() const { return stats; }
 
-void CorePkmn::UpdateLevel() {
-  assert(mLevel >= 1 && mLevel <= 100);
-  while (mLevel < 100 && CalcSpecieExp(mSpecie, mLevel + 1) < mExp) ++mLevel;
+void CorePkmn::update_level() {
+  assert(level >= 1 && level <= 100);
+  while (level < 100 && calc_specie_exp(specie, level + 1) < exp) ++level;
 }
 
-void CorePkmn::UpdateStats() {
-  assert(mLevel >= 1 && mLevel <= 100);
+void CorePkmn::update_stats() {
+  assert(level >= 1 && level <= 100);
   auto compute = [&](int iv, int ev, int base) -> int {
-    return ((iv + base + (std::sqrt(ev) / 8) + 50) * mLevel) / 50;
+    return ((iv + base + (std::sqrt(ev) / 8) + 50) * level) / 50;
   };
-  auto base = GetSpecieBaseStats(mSpecie);
-  mStats.hp = compute(mIV.hp, mEV.hp, base.hp) + 10;
-  mStats.attack = compute(mIV.attack, mEV.attack, base.attack) + 5;
-  mStats.defense = compute(mIV.defense, mEV.defense, base.defense) + 5;
-  mStats.special = compute(mIV.special, mEV.special, base.special) + 5;
-  mStats.speed = compute(mIV.speed, mEV.speed, base.speed) + 5;
+  auto base = get_specie_base_stats(specie);
+  stats.hp = compute(iv.hp, ev.hp, base.hp) + 10;
+  stats.attack = compute(iv.attack, ev.attack, base.attack) + 5;
+  stats.defense = compute(iv.defense, ev.defense, base.defense) + 5;
+  stats.special = compute(iv.special, ev.special, base.special) + 5;
+  stats.speed = compute(iv.speed, ev.speed, base.speed) + 5;
 }
 
-bool CorePkmn::IsAlive() const {
-  assert(mHP >= 0 && mHP <= mStats.hp);
-  return mHP > 0;
+bool CorePkmn::is_alive() const {
+  assert(hp >= 0 && hp <= stats.hp);
+  return hp > 0;
 }
 
 std::ostream& operator<<(std::ostream& os, const CorePkmn& cp) {
   os << "NAME" << std::endl;
-  os << "  Specie: " << GetSpecieName(cp.mSpecie) << std::endl;
-  os << "  HP: " << cp.mHP << std::endl;
-  os << "  Exp: " << cp.mExp << std::endl;
-  os << "  Level: " << cp.mLevel << std::endl;
-  os << "  NonVolStatus: " << cp.mNonVolStatus << std::endl;
-  os << "  Moves:" << std::endl;
-  for (auto i = 0; i < cp.mMoveCount; ++i) {
-    os << "  [" << i << "] " << cp.mMoves[i] << "\tcur=" << cp.mPPs[i].cur << "\tmax=" << cp.mPPs[i].max << "\tstage=" << cp.mPPs[i].stage << std::endl;
+  os << "  specie: " << get_specie_name(cp.specie) << std::endl;
+  os << "  hp: " << cp.hp << std::endl;
+  os << "  exp: " << cp.exp << std::endl;
+  os << "  level: " << cp.level << std::endl;
+  os << "  nonvolstatus: " << cp.nonvolstatus << std::endl;
+  os << "  moves:" << std::endl;
+  for (auto i = 0; i < cp.move_count; ++i) {
+    os << "  [" << i << "] " << cp.moves[i] << "\tcur=" << cp.pps[i].cur << "\tmax=" << cp.pps[i].max << "\tstage=" << cp.pps[i].stage << std::endl;
   }
-  os << "  IV:   \thp=" << cp.mIV.hp << "\tatk=" << cp.mIV.attack << "\tdef=" << cp.mIV.defense << "\tspc=" << cp.mIV.special << "\tspd=" << cp.mIV.speed << std::endl;
-  os << "  EV:   \thp=" << cp.mEV.hp << "\tatk=" << cp.mEV.attack << "\tdef=" << cp.mEV.defense << "\tspc=" << cp.mEV.special << "\tspd=" << cp.mEV.speed << std::endl;
-  os << "  Stats:\thp=" << cp.mStats.hp << "\tatk=" << cp.mStats.attack << "\tdef=" << cp.mStats.defense << "\tspc=" << cp.mStats.special << "\tspd=" << cp.mStats.speed << std::endl;
+  os << "  iv:   \thp=" << cp.iv.hp << "\tatk=" << cp.iv.attack << "\tdef=" << cp.iv.defense << "\tspc=" << cp.iv.special << "\tspd=" << cp.iv.speed << std::endl;
+  os << "  ev:   \thp=" << cp.ev.hp << "\tatk=" << cp.ev.attack << "\tdef=" << cp.ev.defense << "\tspc=" << cp.ev.special << "\tspd=" << cp.ev.speed << std::endl;
+  os << "  stats:\thp=" << cp.stats.hp << "\tatk=" << cp.stats.attack << "\tdef=" << cp.stats.defense << "\tspc=" << cp.stats.special << "\tspd=" << cp.stats.speed << std::endl;
   return os;
 }
 

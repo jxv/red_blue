@@ -10,34 +10,34 @@
 namespace opt = std::experimental;
 
 template<typename E>
-constexpr auto ToUType(E e) noexcept { return static_cast<std::underlying_type_t<E>>(e); }
+constexpr auto to_utype(E e) noexcept { return static_cast<std::underlying_type_t<E>>(e); }
 
 template<typename E>
-constexpr auto NextUType(E e) noexcept { return ToUType(e) + 1; }
+constexpr auto to_next_utype(E e) noexcept { return to_utype(e) + 1; }
 
 template <typename A, size_t size>
 class FixedSet {
 public:
-  size_t Count() const { return mBitset.count(); }
-  size_t Size() const { return size; }
-  bool Get(A a) const { return mBitset[ToUType(a)]; }
+  size_t get_count() const { return bitset.count(); }
+  size_t get_size() const { return size; }
+  bool get(A a) const { return bitset[to_utype(a)]; }
   bool operator[](A a) const { return Get(a); }
-  void Reset() { mBitset.reset(); }
-  void Reset(A a) { mBitset.reset(ToUType(a)); }
-  void Set() { mBitset.set(); } 
-  void Set(A a) { mBitset.set(ToUType(a)); }
+  void reset() { bitset.reset(); }
+  void reset(A a) { bitset.reset(to_utype(a)); }
+  void set() { bitset.set(); } 
+  void set(A a) { bitset.set(to_utype(a)); }
 private:
-  std::bitset<size> mBitset;
+  std::bitset<size> bitset;
 };
 
 template <typename A, typename B, size_t size>
 class Table {
 public:
   Table() {}
-  B& operator[](A a) { return mArray[ToUType(a)]; }
-  size_t Size() const { return size; }
+  B& operator[](A a) { return array[to_utype(a)]; }
+  size_t get_size() const { return size; }
 private:
-  std::array<B, size> mArray;
+  std::array<B, size> array;
 };
 
 #endif

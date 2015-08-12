@@ -4,24 +4,24 @@
 
 namespace RedBlue {
 
-int GetSpecieID(Specie::Tag s) { return s + 1; }
+int get_specie_id(Specie::Tag s) { return s + 1; }
 
-NonVolStatus::Tag RemoveToxic(NonVolStatus::Tag nvs) { return nvs == NonVolStatus::Toxic ? NonVolStatus::Poison : nvs; }
+NonVolStatus::Tag remove_toxic(NonVolStatus::Tag nvs) { return nvs == NonVolStatus::toxic ? NonVolStatus::poison : nvs; }
 
-bool CanSpecieEvolveTo(Specie::Tag s, int level, Specie::Tag t) {
+bool can_specie_evolve_to(Specie::Tag s, int level, Specie::Tag t) {
   switch (s) {
-  case Specie::Bulbasaur: return t == Specie::Ivysaur && level >= 16;
-  case Specie::Ivysaur: return t == Specie::Venusaur && level >= 32;
-  case Specie::Eevee: return t == Specie::Jolteon || t == Specie::Flareon || t == Specie::Vaporeon;
+  case Specie::bulbasaur: return t == Specie::ivysaur && level >= 16;
+  case Specie::ivysaur: return t == Specie::venusaur && level >= 32;
+  case Specie::eevee: return t == Specie::jolteon || t == Specie::flareon || t == Specie::vaporeon;
   default: return false;
   }
 }
 
-const std::string GetSpecieName(Specie::Tag specie) {
+const std::string get_specie_name(Specie::Tag specie) {
   switch (specie) {
-  case Specie::Bulbasaur: return "BULBASAUR";
-  case Specie::Ivysaur: return "IVYSAUR";
-  case Specie::Venusaur: return "VENUSAUR";
+  case Specie::bulbasaur: return "BULBASAUR";
+  case Specie::ivysaur: return "IVYSAUR";
+  case Specie::venusaur: return "VENUSAUR";
   default: return "Specie";
   }
 }

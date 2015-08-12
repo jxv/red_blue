@@ -4,7 +4,7 @@
 
 namespace RedBlue {
 
-static int StageMultiplier(int stage) {
+static int stage_multiplier(int stage) {
   switch (stage) {
   case -6: return 25;
   case -5: return 28;
@@ -23,28 +23,28 @@ static int StageMultiplier(int stage) {
   }
 }
 
-void ActivePkmn::CalcAttack() {
-  mStats.attack = StageMultiplier(mStages.attack) * mCorePkmn.GetStats().attack / 100;
+void ActivePkmn::update_attack() {
+  stats.attack = stage_multiplier(stages.attack) * corepkmn.get_stats().attack / 100;
 }
 
-void ActivePkmn::CalcDefense() {
-  mStats.defense = StageMultiplier(mStages.defense) * mCorePkmn.GetStats().defense / 100;
+void ActivePkmn::update_defense() {
+  stats.defense = stage_multiplier(stages.defense) * corepkmn.get_stats().defense / 100;
 }
 
-void ActivePkmn::CalcSpecial() {
-  mStats.special = StageMultiplier(mStages.special) * mCorePkmn.GetStats().special / 100;
+void ActivePkmn::update_special() {
+  stats.special = stage_multiplier(stages.special) * corepkmn.get_stats().special / 100;
 }
 
-void ActivePkmn::CalcSpeed() {
-  mStats.speed = StageMultiplier(mStages.speed) * mCorePkmn.GetStats().speed / 100;
+void ActivePkmn::update_speed() {
+  stats.speed = stage_multiplier(stages.speed) * corepkmn.get_stats().speed / 100;
 }
 
-void ActivePkmn::CalcAccuracy() {
-  mStats.accuracy = StageMultiplier(mStages.accuracy);
+void ActivePkmn::update_accuracy() {
+  stats.accuracy = stage_multiplier(stages.accuracy);
 }
 
-void ActivePkmn::CalcEvasion() {
-  mStats.evasion = StageMultiplier(mStages.evasion);
+void ActivePkmn::update_evasion() {
+  stats.evasion = stage_multiplier(stages.evasion);
 }
 
 }
