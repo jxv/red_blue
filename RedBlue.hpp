@@ -331,7 +331,14 @@ std::ostream& operator<<(std::ostream&, const CorePkmn&);
 
 struct ActivePkmn {
 public:
+  ActivePkmn(CorePkmn& cp);
+  //
+  //
+  const CorePkmn& get_corepkmn() const;
+  Specie::Tag get_specie() const;
+  const VolStatuses& get_volstatuses() const;
   const ActiveStats& get_stats() const;
+  const ActiveStats& get_stages() const;
   //
 private:
   CorePkmn& corepkmn;
@@ -340,6 +347,7 @@ private:
   ActiveStats stats;
   ActiveStats stages;
   //
+  void update_stats();
   void update_attack();
   void update_defense();
   void update_special();
