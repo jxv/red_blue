@@ -5,7 +5,7 @@
 #include <cassert>
 #include <tuple>
 #include <experimental/optional>
-#include "util.h"
+#include "red_blue/util.h"
 
 namespace red_blue {
 
