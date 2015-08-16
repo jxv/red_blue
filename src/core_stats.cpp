@@ -16,7 +16,7 @@ CoreStats operator+(const CoreStats &a, const CoreStats &b) {
 
 CoreStats operator-(const CoreStats &a, const CoreStats &b) { return a + (-b); }
 
-CoreStats get_specie_base_stats(Specie s) noexcept {
+CoreStats get_base_stats(Specie s) {
   switch (s) {
   case Specie::Bulbasaur: return { 45, 49, 49, 65, 45 };
   case Specie::Ivysaur: return { 60, 62, 63, 80, 60 };
