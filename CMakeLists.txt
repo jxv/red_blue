@@ -5,11 +5,9 @@ add_definitions("-D_GLIBCXX_USE_C99")
 include_directories(.)
 file(GLOB SRC
   "*.cpp"
-  "RedBlue/*.cpp"
 )
 file(GLOB HEADERS
-  "*.hpp"
-  "RedBlue/*.hpp"
+  "*.h"
 )
 
 add_library(RedBlue STATIC ${SRC} ${HEADERS})

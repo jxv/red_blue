@@ -1,4 +1,4 @@
-#include "RedBlue.hpp"
+#include "RedBlue.h"
 
 namespace RedBlue {
 }
