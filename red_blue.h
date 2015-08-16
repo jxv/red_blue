@@ -1,13 +1,15 @@
-#ifndef RedBlue_h
-#define RedBlue_h
+#ifndef RED_BLUE_H
+#define RED_BLUE_H
 
 #include <iostream>
 #include <cassert>
 #include <tuple>
 #include <experimental/optional>
-#include "Util.h"
+#include "util.h"
 
-namespace RedBlue {
+namespace red_blue {
+
+struct CoreStats;
 
 enum class Specie {
   Bulbasaur,
@@ -163,16 +165,12 @@ enum class Specie {
   Mew,
 };
 
-int GetSpecieID(Specie);
-
-enum class Move {
-  Absorb,
-  Growl,
-  Tackle,
-  Wrap,
-};
-
-std::ostream& operator<<(std::ostream& os, Move);
+int get_id(Specie);
+const std::string get_name(Specie);
+CoreStats get_base_stats(Specie);
+bool can_evolve_to(Specie, int level, Specie);
+int get_experience_by_level(Specie, int level);
+std::ostream& operator<<(std::ostream& os, Specie);
 
 enum class PowerPointStage {
   Zero,
@@ -186,6 +184,17 @@ enum class PowerPointStage {
 
 std::ostream& operator<<(std::ostream&, PowerPointStage);
 
+enum class Move {
+  Absorb,
+  Growl,
+  Tackle,
+  Wrap,
+};
+
+int get_maximum_power_points(Move);
+int get_maximum_power_points(Move, PowerPointStage);
+std::ostream& operator<<(std::ostream& os, Move);
+
 class PowerPoints {
   int current;
   int maximum;
@@ -193,20 +202,21 @@ class PowerPoints {
 public:
   PowerPoints();
   PowerPoints(Move);
-  int GetCurrent() const;
-  int GetMaximum() const;
-  PowerPointStage GetStage() const;
-  void Use();
-  void RestoreFull();
-  void Restore(int points);
-  void IncrementStage();
+  int get_current() const;
+  int get_maximum() const;
+  PowerPointStage get_stage() const;
+  void use();
+  void restore_full();
+  void restore(int points);
+  void increment_stage();
 };
 
 class Pokemon; 
+
 class MoveSet {
   std::array<Move, 4> moves;
-  std::array<PowerPoints, 4> powerPointSet;
-  int moveCount;
+  std::array<PowerPoints, 4> power_point_set;
+  int move_count;
 public:
   MoveSet();
   MoveSet(Move,
@@ -224,7 +234,7 @@ public:
     PowerPointStage stage2 = PowerPointStage::Zero,
     PowerPointStage stage3 = PowerPointStage::Zero);
 private:
-  void InitPowerPointsSet();
+  void init_power_points_set();
   friend class Pokemon;
 };
 
@@ -254,18 +264,20 @@ std::ostream& operator<<(std::ostream&, NonVolStatus);
 struct VolStatuses {
   int confusion;
   int flinch;
-  int leechSeed;
+  int leech_seed;
   int nightmare;
-  int partiallyTrapped;
+  int partially_trapped;
 };
 
 struct CoreStats {
-  int healthPoints;
+  int health_points;
   int attack;
   int defense;
   int special;
   int speed;
 };
+
+CoreStats make_individual_values(int atk, int def, int spc, int spd);
 
 CoreStats operator-(const CoreStats &a);
 CoreStats operator+(const CoreStats &a, const CoreStats &b);
@@ -302,51 +314,51 @@ using ActiveStages = Active<ActiveStage>;
 
 class Pokemon {
   Specie specie;
-  int healthPoints;
+  int health_points;
   int experience;
-  CoreStats individualValues;
-  CoreStats effortValues;
-  NonVolStatus nonVolStatus;
-  int moveCount;
+  CoreStats individual_values;
+  CoreStats effort_values;
+  NonVolStatus non_vol_status;
+  int move_count;
   std::array<Move, 4> moves;
-  std::array<PowerPoints, 4> powerPointSet;
+  std::array<PowerPoints, 4> power_point_set;
   int level;
   CoreStats stats;
 public:
   Pokemon(CoreStats iv, Specie, int level, MoveSet);
-  Specie GetSpecie() const;
-  int GetHealthPoints() const;
-  int GetExperience() const;
-  NonVolStatus GetNonVolStatus() const;
-  int GetMoveCount() const;
-  Move GetMove(int idx) const;
-  const PowerPoints& GetPowerPoints(int idx) const;
-  int GetLevel() const;
-  CoreStats GetStats() const;
-  bool IsAlive() const;
-  void Evolve(Specie);
-  void RestoreHealthPoints();
-  void RestoreHealthPoints(int hp);
-  void DamageHealthPoints(int hp);
-  void AddExperience(int exp);
-  void AddEffortValues(CoreStats);
-  void Burn();
-  void Freeze();
-  void Paralyze();
-  void Poison();
-  void Sleep();
-  void Intoxicate();
-  void RestoreNonVolStatus();
-  void SwapMove(int idx0, int idx1);
-  void LearnMove(Move, int idx);
-  void UsePowerPoint(int idx);
-  void RestorePowerPoints();
-  void RestorePowerPoints(int idx);
-  void RestorePowerPoints(int idx, int addition);
-  void IncrementPowerPointsStage(int idx);
+  Specie get_specie() const;
+  int get_health_points() const;
+  int get_experience() const;
+  NonVolStatus get_non_vol_status() const;
+  int get_move_count() const;
+  Move get_move(int idx) const;
+  const PowerPoints& get_power_points(int idx) const;
+  int get_level() const;
+  CoreStats get_stats() const;
+  bool is_alive() const;
+  void evolve(Specie);
+  void restore_health_points();
+  void restore_health_points(int hp);
+  void damage_health_points(int hp);
+  void add_experience(int exp);
+  void add_effort_values(CoreStats);
+  void burn();
+  void freeze();
+  void paralyze();
+  void poison();
+  void sleep();
+  void intoxicate();
+  void restore_non_vol_status();
+  void swap_move(int idx0, int idx1);
+  void learn_move(Move, int idx);
+  void use_power_point(int idx);
+  void restore_power_points();
+  void restore_power_points(int idx);
+  void restore_power_points(int idx, int addition);
+  void increment_power_points_stage(int idx);
 private:
-  void UpdateLevel();
-  void UpdateStats();
+  void update_level();
+  void update_stats();
   friend std::ostream& operator<<(std::ostream&, const Pokemon&);
 };
 
@@ -354,23 +366,23 @@ std::ostream& operator<<(std::ostream&, const Pokemon&);
 
 class Battlemon {
   std::experimental::optional<Specie> transform;
-  VolStatuses volStatuses;
+  VolStatuses vol_statuses;
   ActiveStats stats;
   ActiveStages stages;
 public:
   Battlemon(const Pokemon&);
-  Specie GetSpecie(const Pokemon&) const;
-  const VolStatuses& GetVolStatuses() const;
-  const ActiveStats& GetStats() const;
-  const ActiveStages& GetStages() const;
+  Specie get_specie(const Pokemon&) const;
+  const VolStatuses& get_vol_statuses() const;
+  const ActiveStats& get_stats() const;
+  const ActiveStages& get_stages() const;
 private:
-  void UpdateStats(const Pokemon&);
-  void UpdateAttack(const Pokemon&);
-  void UpdateDefense(const Pokemon&);
-  void UpdateSpecial(const Pokemon&);
-  void UpdateSpeed(const Pokemon&);
-  void UpdateAccuracy(const Pokemon&);
-  void UpdateEvasion(const Pokemon&);
+  void update_stats(const Pokemon&);
+  void update_attack(const Pokemon&);
+  void update_defense(const Pokemon&);
+  void update_special(const Pokemon&);
+  void update_speed(const Pokemon&);
+  void update_accuracy(const Pokemon&);
+  void update_evasion(const Pokemon&);
 };
 
 enum class Player {
@@ -402,32 +414,24 @@ enum class Action {
 struct BattleAction {
   Action action;
   union {
-    struct { } switchOut;
+    struct { } switch_out;
   };
 };
   
 class Battle {
   Player hot;
   Player cold;
-  BattleAction battleAction;
+  BattleAction battle_action;
 public:
   Battle();
-  Battlemon& GetHotBattlemon() const;
-  Battlemon& GetColdBattlemon() const;
-  Pokemon& GetHotPokemon() const;
-  Pokemon& GetColdPokemon() const;
-  const BattleAction& GetBattleAction() const;
+  Battlemon& get_hot_battlemon() const;
+  Battlemon& get_cold_battlemon() const;
+  Pokemon& get_hot_pokemon() const;
+  Pokemon& get_cold_pokemon() const;
+  const BattleAction& get_battle_action() const;
   bool Step();
 };
 
-CoreStats GetSpecieBaseStats(Specie) noexcept;
-CoreStats MakeIndividualValues(int atk, int def, int spc, int spd);
-
-const std::string GetSpecieName(Specie);
-bool CanSpecieEvolveTo(Specie, int level, Specie);
-int CalculateSpecieExperience(Specie, int level);
-int GetMoveMaximumPowerPoints(Move);
-int CalculateMoveMaximumPowerPoints(Move, PowerPointStage);
 
 }
 

@@ -1,12 +1,12 @@
-#include "RedBlue.h"
+#include "red_blue.h"
 
-namespace RedBlue {
+namespace red_blue {
 
-CoreStats operator-(const CoreStats &a) { return { -a.healthPoints, -a.attack, -a.defense, -a.speed, -a.special }; }
+CoreStats operator-(const CoreStats &a) { return { -a.health_points, -a.attack, -a.defense, -a.speed, -a.special }; }
 
 CoreStats operator+(const CoreStats &a, const CoreStats &b) {
   return {
-    a.healthPoints + b.healthPoints,
+    a.health_points + b.health_points,
     a.attack + b.attack,
     a.defense + b.defense,
     a.special + b.special,
@@ -16,7 +16,7 @@ CoreStats operator+(const CoreStats &a, const CoreStats &b) {
 
 CoreStats operator-(const CoreStats &a, const CoreStats &b) { return a + (-b); }
 
-CoreStats GetSpecieBaseStats(Specie s) noexcept {
+CoreStats get_specie_base_stats(Specie s) noexcept {
   switch (s) {
   case Specie::Bulbasaur: return { 45, 49, 49, 65, 45 };
   case Specie::Ivysaur: return { 60, 62, 63, 80, 60 };
@@ -39,7 +39,7 @@ CoreStats GetSpecieBaseStats(Specie s) noexcept {
   };
 }
 
-CoreStats MakeIndividualValues(int atk, int def, int spc, int spd) {
+CoreStats make_individual_values(int atk, int def, int spc, int spd) {
   assert((atk & 0xf) == atk);
   assert((def & 0xf) == def);
   assert((spc & 0xf) == spc);

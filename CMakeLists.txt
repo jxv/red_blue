@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(RedBlue)
+project(red_blue)
 add_definitions("-std=c++14")
 add_definitions("-D_GLIBCXX_USE_C99")
 include_directories(.)
@@ -10,4 +10,4 @@ file(GLOB HEADERS
   "*.h"
 )
 
-add_library(RedBlue STATIC ${SRC} ${HEADERS})
+add_library(red_blue STATIC ${SRC} ${HEADERS})

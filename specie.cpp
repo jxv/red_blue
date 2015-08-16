@@ -1,16 +1,12 @@
 #include <cmath>
 #include <cassert>
-#include "RedBlue.h"
+#include "red_blue.h"
 
-namespace RedBlue {
+namespace red_blue {
 
-int GetSpecieID(Specie s) { return ToUType(s) + 1; }
+int get_id(Specie s) { return ToUType(s) + 1; }
 
-NonVolStatus RemoveToxic(NonVolStatus nvs) {
-  return nvs == NonVolStatus::Toxic ? NonVolStatus::Poison : nvs;
-}
-
-bool CanSpecieEvolveTo(Specie s, int level, Specie t) {
+bool can_evolve_to(Specie s, int level, Specie t) {
   switch (s) {
   case Specie::Bulbasaur: return t == Specie::Ivysaur && level >= 16;
   case Specie::Ivysaur: return t == Specie::Venusaur && level >= 32;
@@ -19,13 +15,23 @@ bool CanSpecieEvolveTo(Specie s, int level, Specie t) {
   }
 }
 
-const std::string GetSpecieName(Specie s) {
+const std::string get_name(Specie s) {
   switch (s) {
   case Specie::Bulbasaur: return "BULBASAUR";
   case Specie::Ivysaur: return "IVYSAUR";
   case Specie::Venusaur: return "VENUSAUR";
   default: return "Specie";
   }
+}
+
+std::ostream& operator<<(std::ostream& os, Specie s) {
+  switch (s) {
+  case Specie::Bulbasaur: os << "BULBASAUR"; break;
+  case Specie::Ivysaur: os << "IVYSAUR"; break;
+  case Specie::Venusaur: os << "VENUSAUR"; break;
+  default: assert(false);
+  }
+  return os;
 }
 
 }

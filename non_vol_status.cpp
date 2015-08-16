@@ -1,6 +1,6 @@
-#include "RedBlue.h"
+#include "red_blue.h"
 
-namespace RedBlue {
+namespace red_blue {
 
 std::ostream& operator<<(std::ostream& os, NonVolStatus nvs) {
   switch (nvs) {

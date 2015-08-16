@@ -1,6 +1,6 @@
-#include "RedBlue.h"
+#include "red_blue.h"
 
-namespace RedBlue {
+namespace red_blue {
 
 std::ostream& operator<<(std::ostream& os, Move move) {
   switch (move) {
@@ -11,11 +11,11 @@ std::ostream& operator<<(std::ostream& os, Move move) {
   }
 }
 
-int GetMoveMaximumPowerPoints(Move) {
+int get_maximum_power_points(Move) {
   return 10;
 }
 
-int CalculateMoveMaximumPowerPoints(Move, PowerPointStage) {
+int calculate_maximum_power_points(Move, PowerPointStage) {
   return 10;
 }
 

@@ -1,6 +1,6 @@
-#include "RedBlue.h"
+#include "red_blue.h"
 
-namespace RedBlue {
+namespace red_blue {
 
 PowerPoints::PowerPoints()
 : current(0)
@@ -13,33 +13,23 @@ PowerPoints::PowerPoints(Move move)
   maximum = 10;
 }
 
-int PowerPoints::GetCurrent() const {
-  return current;
-}
+int PowerPoints::get_current() const { return current; }
+int PowerPoints::get_maximum() const { return maximum; }
+PowerPointStage PowerPoints::get_stage() const { return stage; }
 
-int PowerPoints::GetMaximum() const {
-  return maximum;
-}
-
-PowerPointStage PowerPoints::GetStage() const {
-  return stage;
-}
-
-void PowerPoints::Use() {
+void PowerPoints::use() {
   assert(current > 0);
   --current;
 }
 
-void PowerPoints::RestoreFull() {
-  current = maximum;
-}
+void PowerPoints::restore_full() { current = maximum; }
 
-void PowerPoints::Restore(int points) {
+void PowerPoints::restore(int points) {
   assert(current > 0);
   current = std::min(current + points, maximum);
 }
 
-void PowerPoints::IncrementStage() {
+void PowerPoints::increment_stage() {
   switch (stage) {
   case PowerPointStage::Zero: stage = PowerPointStage::One; break;
   case PowerPointStage::One: stage = PowerPointStage::Two; break;
