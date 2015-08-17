@@ -216,7 +216,7 @@ class Pokemon;
 class MoveSet {
   std::array<Move, 4> moves;
   std::array<PowerPoints, 4> power_point_set;
-  int move_count;
+  int size;
 public:
   MoveSet();
   MoveSet(Move,
@@ -233,9 +233,18 @@ public:
     PowerPointStage stage1 = PowerPointStage::Zero,
     PowerPointStage stage2 = PowerPointStage::Zero,
     PowerPointStage stage3 = PowerPointStage::Zero);
+  int get_size() const;
+  Move get_move(int idx) const;
+  const PowerPoints& get_power_points(int idx) const;
+  void swap(int idx0, int idx1);
+  void learn(Move, int idx);
+  void use(int idx);
+  void restore();
+  void restore(int idx);
+  void restore(int idx, int addition);
+  void increment_stage(int idx);
 private:
-  void init_power_points_set();
-  friend class Pokemon;
+  void init_power_point_set();
 };
 
 enum class Badge {
@@ -319,22 +328,18 @@ class Pokemon {
   CoreStats individual_values;
   CoreStats effort_values;
   NonVolStatus non_vol_status;
-  int move_count;
-  std::array<Move, 4> moves;
-  std::array<PowerPoints, 4> power_point_set;
   int level;
   CoreStats stats;
+public:
+  MoveSet move_set;
 public:
   Pokemon(CoreStats iv, Specie, int level, MoveSet);
   Specie get_specie() const;
   int get_health_points() const;
   int get_experience() const;
   NonVolStatus get_non_vol_status() const;
-  int get_move_count() const;
-  Move get_move(int idx) const;
-  const PowerPoints& get_power_points(int idx) const;
   int get_level() const;
-  CoreStats get_stats() const;
+  const CoreStats& get_stats() const;
   bool is_alive() const;
   void evolve(Specie);
   void restore_health_points();
@@ -349,15 +354,8 @@ public:
   void sleep();
   void intoxicate();
   void restore_non_vol_status();
-  void swap_move(int idx0, int idx1);
-  void learn_move(Move, int idx);
-  void use_power_point(int idx);
-  void restore_power_points();
-  void restore_power_points(int idx);
-  void restore_power_points(int idx, int addition);
-  void increment_power_points_stage(int idx);
 private:
-  void update_level();
+  void sync_level();
   void update_stats();
   friend std::ostream& operator<<(std::ostream&, const Pokemon&);
 };
@@ -414,7 +412,8 @@ enum class Action {
 struct BattleAction {
   Action action;
   union {
-    struct { } switch_out;
+    struct { 
+    } switch_out;
   };
 };
   
